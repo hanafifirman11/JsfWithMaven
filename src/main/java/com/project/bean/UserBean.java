@@ -25,6 +25,7 @@ public class UserBean implements Serializable{
 	private User userSelected = new User();
 	private List<User> listOfUserTmp = new ArrayList<User>();
 	private UserBL userBL = new UserBL();
+	private Boolean edit;
 	
 	public UserBean() {
 		init();
@@ -36,15 +37,26 @@ public class UserBean implements Serializable{
 		listOfUser = userBL.findAllUser();
 		userSelected = new User();
 		listOfUserTmp = new ArrayList<User>();
+		edit = false;
 		LOGGER.info(listOfUser);
 	}
 	
 	public void selectionUser() {
 		user = userSelected;
+		edit = true;
+	}
+	
+	public void unSelectionUser() {
+		user = new User();
+		edit = false;
 	}
 
 	public void save() {
-		userBL.saveUser(userSelected);
+		if(edit) {
+			userBL.updateUser(user);
+		}else {
+			userBL.saveUser(user);
+		}
 		init();
 	}
 
@@ -78,5 +90,13 @@ public class UserBean implements Serializable{
 
 	public void setUserSelected(User userSelected) {
 		this.userSelected = userSelected;
+	}
+
+	public Boolean getEdit() {
+		return edit;
+	}
+
+	public void setEdit(Boolean edit) {
+		this.edit = edit;
 	}
 }

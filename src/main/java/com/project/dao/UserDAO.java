@@ -273,6 +273,46 @@ public class UserDAO {
 		}
 		return true;
 	}
+	
+	public Boolean updateUser(User user) {
+		Connection connection = ConnectionConfig.getDBConnection();
+		PreparedStatement preparedStatement = null;
+
+		String insertTableSQL = "UPDATE users"
+				+ " SET email=?, name=?, birth_date=?, address=?, salary=?, status=?"
+				+ " WHERE id=?";
+
+		try {
+			preparedStatement = connection.prepareStatement(insertTableSQL);
+			preparedStatement.setString(1, user.getEmail());
+			preparedStatement.setString(2, user.getName());
+			preparedStatement.setTimestamp(3, new Timestamp(user.getBirthDate().getTime()));
+			preparedStatement.setString(4, user.getAddress());
+			preparedStatement.setBigDecimal(5, user.getSalary());
+			preparedStatement.setBoolean(6, user.getStatus());
+			preparedStatement.setLong(7, user.getId());
+			
+			int check = preparedStatement.executeUpdate();
+
+			LOGGER.info("Record tabel check -- "+check);
+
+		} catch (SQLException e) {
+			LOGGER.error(e.getMessage(), e);
+		} finally {
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e2) {
+				LOGGER.error(e2.getMessage(), e2);
+			}
+		}
+		return true;
+	}
 
 	
 }

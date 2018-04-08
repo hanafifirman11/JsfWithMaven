@@ -17,41 +17,42 @@
 			<p:panelGrid columns="3" >
 				<h:outputLabel value="ID" />
 				<h:outputLabel value=":" />
-				<p:inputText value="#{userBean.userSelected.id}" />
+				<p:inputText value="#{userBean.user.id}" readonly="#{userBean.edit}" />
 				
 				<h:outputLabel value="EMAIL" />
 				<h:outputLabel value=":" />
-				<p:inputText value="#{userBean.userSelected.email}" />
+				<p:inputText value="#{userBean.user.email}" />
 				
 				<h:outputLabel value="NAME" />
 				<h:outputLabel value=":" />
-				<p:inputText value="#{userBean.userSelected.name}" />
+				<p:inputText value="#{userBean.user.name}" />
 				
 				<h:outputLabel value="BIRTH DATE" />
 				<h:outputLabel value=":" />
-				<p:calendar value="#{userBean.userSelected.birthDate}" pattern="dd-MM-yyyy" readonlyInput="true" > </p:calendar>
+				<p:calendar value="#{userBean.user.birthDate}" pattern="dd-MM-yyyy" readonlyInput="true" > </p:calendar>
 				
 				<h:outputLabel value="ADDRESS" />
 				<h:outputLabel value=":" />
-				<p:inputText value="#{userBean.userSelected.address}" />
+				<p:inputText value="#{userBean.user.address}" />
 				
 				<h:outputLabel value="SALARY" />
 				<h:outputLabel value=":" />
-				<p:inputNumber value="#{userBean.userSelected.salary}" />
+				<p:inputNumber value="#{userBean.user.salary}" />
 				
 				<h:outputLabel value="STATUS" />
 				<h:outputLabel value=":" />
-				<p:selectBooleanButton id="value1" value="#{userBean.userSelected.status}" onLabel="ACTIVE" offLabel="INACTIVE"  />
+				<p:selectBooleanButton id="value1" value="#{userBean.user.status}" onLabel="ACTIVE" offLabel="INACTIVE"  />
 			</p:panelGrid>
+			<p:commandButton value="SAVE" actionListener="#{userBean.save()}" update=":form" />
 		</p:panel>
 
 		<p:dataTable value="#{userBean.listOfUser}" rowKey="#{a.id}" var="a"
 			id="user" selection="#{userBean.userSelected}" selectionMode="single">
 
 			<p:ajax event="rowSelect" 
-				update=":form:panelGrid" />
+				update=":form:panelGrid" listener="#{userBean.selectionUser()}" />
 			<p:ajax event="rowUnselect" 
-				update=":form:panelGrid" />
+				update=":form:panelGrid" listener="#{userBean.unSelectionUser()}" />
 
 			<p:column headerText="ID">
 				<h:outputText value="#{a.id}" />

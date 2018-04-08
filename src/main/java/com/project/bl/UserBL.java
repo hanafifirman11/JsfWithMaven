@@ -28,6 +28,13 @@ public class UserBL {
 		return userDAO.findAdvancedSearchUser(user);
 	}
 	
+	public Boolean updateUser (User user) {
+		if(userDAO.updateUser(user)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public Boolean saveUser (User user) {
 		if(userDAO.insertUser(user)) {
 			return true;
