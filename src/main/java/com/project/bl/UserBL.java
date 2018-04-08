@@ -28,6 +28,13 @@ public class UserBL {
 		return userDAO.findAdvancedSearchUser(user);
 	}
 	
+	public Boolean deleteUser (User user) {
+		if(userDAO.deleteUser(user)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public Boolean updateUser (User user) {
 		if(userDAO.updateUser(user)) {
 			return true;

@@ -50,6 +50,13 @@ public class UserBean implements Serializable{
 		user = new User();
 		edit = false;
 	}
+	
+	public void delete() {
+		if(edit) {
+			userBL.deleteUser(user);
+		}
+		init();
+	}
 
 	public void save() {
 		if(edit) {

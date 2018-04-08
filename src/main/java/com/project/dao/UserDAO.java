@@ -313,6 +313,39 @@ public class UserDAO {
 		}
 		return true;
 	}
+	
+	public Boolean deleteUser(User user) {
+		Connection connection = ConnectionConfig.getDBConnection();
+		PreparedStatement preparedStatement = null;
+
+		String insertTableSQL = "DELETE FROM users"
+				+ " WHERE id=?";
+
+		try {
+			preparedStatement = connection.prepareStatement(insertTableSQL);
+			preparedStatement.setLong(1, user.getId());
+			
+			int check = preparedStatement.executeUpdate();
+
+			LOGGER.info("Record tabel check -- "+check);
+
+		} catch (SQLException e) {
+			LOGGER.error(e.getMessage(), e);
+		} finally {
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e2) {
+				LOGGER.error(e2.getMessage(), e2);
+			}
+		}
+		return true;
+	}
 
 	
 }

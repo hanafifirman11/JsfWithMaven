@@ -17,7 +17,7 @@
 			<p:panelGrid columns="3" >
 				<h:outputLabel value="ID" />
 				<h:outputLabel value=":" />
-				<p:inputText value="#{userBean.user.id}" readonly="#{userBean.edit}" />
+				<p:inputText value="#{userBean.user.id}" disabled="#{userBean.edit}" />
 				
 				<h:outputLabel value="EMAIL" />
 				<h:outputLabel value=":" />
@@ -44,6 +44,8 @@
 				<p:selectBooleanButton id="value1" value="#{userBean.user.status}" onLabel="ACTIVE" offLabel="INACTIVE"  />
 			</p:panelGrid>
 			<p:commandButton value="SAVE" actionListener="#{userBean.save()}" update=":form" />
+			<p:commandButton value="DELETE" actionListener="#{userBean.delete()}" update=":form" />
+			<p:commandButton value="RESET" actionListener="#{userBean.init()}" update=":form" />
 		</p:panel>
 
 		<p:dataTable value="#{userBean.listOfUser}" rowKey="#{a.id}" var="a"
