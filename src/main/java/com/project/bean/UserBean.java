@@ -22,13 +22,30 @@ public class UserBean implements Serializable{
 	
 	private List<User> listOfUser = new ArrayList<User>();
 	private User user = new User();
+	private User userSelected = new User();
 	private List<User> listOfUserTmp = new ArrayList<User>();
 	private UserBL userBL = new UserBL();
 	
 	public UserBean() {
+		init();
+	}
+	
+	public void init() {
 		LOGGER.info("Constructor for UserBean");
+		user = new User();
 		listOfUser = userBL.findAllUser();
+		userSelected = new User();
+		listOfUserTmp = new ArrayList<User>();
 		LOGGER.info(listOfUser);
+	}
+	
+	public void selectionUser() {
+		user = userSelected;
+	}
+
+	public void save() {
+		userBL.saveUser(userSelected);
+		init();
 	}
 
 	public List<User> getListOfUser() {
@@ -53,5 +70,13 @@ public class UserBean implements Serializable{
 
 	public void setListOfUserTmp(List<User> listOfUserTmp) {
 		this.listOfUserTmp = listOfUserTmp;
+	}
+
+	public User getUserSelected() {
+		return userSelected;
+	}
+
+	public void setUserSelected(User userSelected) {
+		this.userSelected = userSelected;
 	}
 }

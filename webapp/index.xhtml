@@ -1,23 +1,82 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"> 
-      
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
 
 <h:head>
 	<title>JSF WITH MAVEN</title>
-</h:head> 
-<h:body> 
-	<h2>JSF WITH MAVEN</h2><br/>
-	<p:dataTable value="#{userBean.listOfUser}" var="a" id="user" >
-		<p:column headerText="ID">
-			<h:outputText value="#{a.id}" />
-		</p:column>
-		<p:column headerText="NAME">
-			<h:outputText value="#{a.name}" />
-		</p:column>
-	</p:dataTable>
-</h:body> 
+</h:head>
+<h:body>
+	<h2>JSF WITH MAVEN</h2>
+	<br />
+	<h:form id="form">
+		<p:panel id="panelGrid">
+			<p:panelGrid columns="3" >
+				<h:outputLabel value="ID" />
+				<h:outputLabel value=":" />
+				<p:inputText value="#{userBean.userSelected.id}" />
+				
+				<h:outputLabel value="EMAIL" />
+				<h:outputLabel value=":" />
+				<p:inputText value="#{userBean.userSelected.email}" />
+				
+				<h:outputLabel value="NAME" />
+				<h:outputLabel value=":" />
+				<p:inputText value="#{userBean.userSelected.name}" />
+				
+				<h:outputLabel value="BIRTH DATE" />
+				<h:outputLabel value=":" />
+				<p:calendar value="#{userBean.userSelected.birthDate}" pattern="dd-MM-yyyy" readonlyInput="true" > </p:calendar>
+				
+				<h:outputLabel value="ADDRESS" />
+				<h:outputLabel value=":" />
+				<p:inputText value="#{userBean.userSelected.address}" />
+				
+				<h:outputLabel value="SALARY" />
+				<h:outputLabel value=":" />
+				<p:inputNumber value="#{userBean.userSelected.salary}" />
+				
+				<h:outputLabel value="STATUS" />
+				<h:outputLabel value=":" />
+				<p:selectBooleanButton id="value1" value="#{userBean.userSelected.status}" onLabel="ACTIVE" offLabel="INACTIVE"  />
+			</p:panelGrid>
+		</p:panel>
+
+		<p:dataTable value="#{userBean.listOfUser}" rowKey="#{a.id}" var="a"
+			id="user" selection="#{userBean.userSelected}" selectionMode="single">
+
+			<p:ajax event="rowSelect" 
+				update=":form:panelGrid" />
+			<p:ajax event="rowUnselect" 
+				update=":form:panelGrid" />
+
+			<p:column headerText="ID">
+				<h:outputText value="#{a.id}" />
+			</p:column>
+			<p:column headerText="EMAIL">
+				<h:outputText value="#{a.email}" />
+			</p:column>
+			<p:column headerText="NAME">
+				<h:outputText value="#{a.name}" />
+			</p:column>
+			<p:column headerText="BIRTH DATE">
+				<h:outputText value="#{a.birthDate}" >
+					<f:convertDateTime pattern="dd-MM-yyyy"/>
+				</h:outputText>
+			</p:column>
+			<p:column headerText="ADDRESS">
+				<h:outputText value="#{a.address}" />
+			</p:column>
+			<p:column headerText="SALARY">
+				<h:outputText value="#{a.salary}" />
+			</p:column>
+			<p:column headerText="STATUS">
+				<h:outputText value="#{a.status ? 'ACTIVE' : 'INACTIVE'}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+</h:body>
 </html>
